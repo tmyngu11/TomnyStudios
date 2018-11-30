@@ -1,0 +1,13 @@
+{
+"companyName": "Tomny Studios",
+"productName": "Do You Know Da Wae",
+"dataUrl": "DYKDW.data.unityweb",
+"asmCodeUrl": "DYKDW.asm.code.unityweb",
+"asmMemoryUrl": "DYKDW.asm.memory.unityweb",
+"asmFrameworkUrl": "DYKDW.asm.framework.unityweb",
+"TOTAL_MEMORY": 268435456,
+"graphicsAPI": ["WebGL 2.0", "WebGL 1.0"],
+"webglContextAttributes": {"preserveDrawingBuffer": false},
+"splashScreenStyle": "Dark",
+"backgroundColor": "#231F20"
+}
