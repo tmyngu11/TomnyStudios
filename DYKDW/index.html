@@ -8,37 +8,41 @@
     <link rel="stylesheet" href="TemplateData/style.css">
     <script src="TemplateData/UnityProgress.js"></script>  
     <script src="Build/UnityLoader.js"></script>
+    <script src="https://connect.facebook.net/en_US/fbinstant.6.2.js"></script>
     <script>
-      var gameInstance = UnityLoader.instantiate("gameContainer", "Build/FB.json", {onProgress: UnityProgress});
+      var gameInstance = UnityLoader.instantiate("gameContainer", "Build/FBWebGL.json", {onProgress: UnityProgress});
+    </script>
+    <script type="text/javascript">
+      window.onload = (e) => {
+        FBInstant.initializeAsync().then(function () {
+          while(UnityProgress != 100){
+            // Informs the SDK of loading progress
+            FBInstant.setLoadingProgress(progress); 
+          }
+          // Once all assets are loaded, tells the SDK 
+          // to end loading view and start the game
+          FBInstant.startGameAsync().then(function () {
+            // Retrieving context and player information can only be done
+            // once startGameAsync() resolves
+            var contextId = FBInstant.context.getID();
+            var contextType = FBInstant.context.getType();
+
+            var playerName = FBInstant.player.getName();
+            var playerPic = FBInstant.player.getPhoto();
+            var playerId = FBInstant.player.getID();
+
+            // Once startGameAsync() resolves it also means the loading view has 
+            // been removed and the user can see the game viewport
+
+            game.start();
+          });
+        });
+      }
     </script>
   </head>
   <body>
-      <script>
-          window.fbAsyncInit = function() {
-            FB.init({
-              appId      : '552219798466713',
-              xfbml      : true,
-              version    : 'v3.2'
-            });
-        
-            // ADD ADDITIONAL FACEBOOK CODE HERE
-          };
-        
-          (function(d, s, id){
-             var js, fjs = d.getElementsByTagName(s)[0];
-             if (d.getElementById(id)) {return;}
-             js = d.createElement(s); js.id = id;
-             js.src = "https://connect.facebook.net/en_US/sdk.js";
-             fjs.parentNode.insertBefore(js, fjs);
-           }(document, 'script', 'facebook-jssdk'));
-        </script>
     <div class="webgl-content">
       <div id="gameContainer" style="width: 960px; height: 600px"></div>
-      <div class="footer">
-        <div class="webgl-logo"></div>
-        <div class="fullscreen" onclick="gameInstance.SetFullscreen(1)"></div>
-        <div class="title">Do You Know Da Wae</div>
-      </div>
     </div>
   </body>
 </html>
