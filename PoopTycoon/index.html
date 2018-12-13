@@ -9,6 +9,62 @@
     <script src="TemplateData/UnityProgress.js"></script>  
     <script src="Build/UnityLoader.js"></script>
 
+    <script src="https://connect.facebook.net/en_US/fbinstant.6.2.js"></script>
+    <script type="text/javascript">
+      window.onload = (e) => {
+        FBInstant.initializeAsync().then(function () {
+          /*while(UnityProgress != 100){
+            // Informs the SDK of loading progress
+            FBInstant.setLoadingProgress(progress); 
+          }*/
+          // Once all assets are loaded, tells the SDK 
+          // to end loading view and start the game
+          FBInstant.startGameAsync().then(function () {
+            // Retrieving context and player information can only be done
+            // once startGameAsync() resolves
+            var contextId = FBInstant.context.getID();
+            var contextType = FBInstant.context.getType();
+
+            var playerName = FBInstant.player.getName();
+            var playerPic = FBInstant.player.getPhoto();
+            var playerId = FBInstant.player.getID();
+
+            // Once startGameAsync() resolves it also means the loading view has 
+            // been removed and the user can see the game viewport
+
+            game.start();
+          });
+        });
+      }
+    </script>
+    <script>
+        function UnityProgress(gameInstance, progress) {
+          if (!gameInstance.Module)
+            return;
+          if (!gameInstance.logo) {
+            gameInstance.logo = document.createElement("div");
+            gameInstance.logo.className = "logo " + gameInstance.Module.splashScreenStyle;
+            gameInstance.container.appendChild(gameInstance.logo);
+          }
+          if (!gameInstance.progress) {    
+            gameInstance.progress = document.createElement("div");
+            gameInstance.progress.className = "progress " + gameInstance.Module.splashScreenStyle;
+            gameInstance.progress.empty = document.createElement("div");
+            gameInstance.progress.empty.className = "empty";
+            gameInstance.progress.appendChild(gameInstance.progress.empty);
+            gameInstance.progress.full = document.createElement("div");
+            gameInstance.progress.full.className = "full";
+            gameInstance.progress.appendChild(gameInstance.progress.full);
+            gameInstance.container.appendChild(gameInstance.progress);
+          }
+          gameInstance.progress.full.style.width = (100 * progress) + "%";
+          gameInstance.progress.empty.style.width = (100 * (1 - progress)) + "%";
+          if (progress == 1)
+            gameInstance.logo.style.display = gameInstance.progress.style.display = "none";
+          FBInstant.setLoadingProgress(progress); 
+        }
+    </script>
+
     <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
     <script>
          (adsbygoogle = window.adsbygoogle || []).push({
