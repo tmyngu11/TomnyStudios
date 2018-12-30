@@ -266,7 +266,7 @@
             var link = data.items[videoNumber].link;
             id = link.substr(link.indexOf("=") + 1); 
             var iframe = $(video).find("#videoEmbed"); 
-            iframe.attr("src", "https://youtube.com/embed/" + id + "?controls=1&autoplay=1");
+            iframe.attr("src", "https://youtube.com/embed/" + id + "?controls=1&autoplay=0");
 
             var title = data.items[videoNumber].title;
             var desc = $(video).find("#videoDesc"); 
